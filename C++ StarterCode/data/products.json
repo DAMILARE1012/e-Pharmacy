@@ -1,0 +1,6 @@
+[
+{"code":"u4CXQKHSET7S65FtIdwU5cVWQ8Qjh19Qo","name":"Kinine","brand":"Brand 1","description":"Description 1","dosage_instruction":"Dosage 1","price":290.000000,"quantity":0,"category":"Category 1","requires_prescription":0},
+{"code":"VsCLBDbuOlAme7hX9nIsaQEoi9OsZ6oIP","name":"Name 2","brand":"Brand 2","description":"description 2","dosage_instruction":"dosage 2","price":0.900000,"quantity":12,"category":"category 2","requires_prescription":0},
+{"code":"R8Ibu4fwETzZk5CUWsHwjfSMiVJV9jQMm","name":"Name 3","brand":"brand 3","description":"descr","dosage_instruction":"dosage 3","price":1490.900024,"quantity":13,"category":"category 3","requires_prescription":1},
+{"code":"LjXZKgVjLAyh8hdD5FmSPBq2EXeDaeJxO","name":"Medication1","brand":"Brand 1","description":"Description 1","dosage_instruction":"Dosage Instruction 1","price":1000.989990,"quantity":11,"category":"Category 1","requires_prescription":1}
+]
