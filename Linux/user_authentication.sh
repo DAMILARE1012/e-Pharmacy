@@ -5,6 +5,9 @@ credentials_file="data/credentials.txt"
 # Function to prompt for credentials
 get_credentials() {
     # Write code read the user username and password 
+    read -p "Username: " user
+    read -s -p "Password: " pass
+    echo
     # The password must be invisible while typing to ensure that no one can read it while inserting it 
     return 0
 }
