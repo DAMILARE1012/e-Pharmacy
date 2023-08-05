@@ -42,8 +42,14 @@ class ProductClass{
         int qty;
         cout << "Enter Quantity for the product" << endl;
         
-        // Write code to prompt user to enter the quantity and update the qty 
-
+        // Write code to prompt user to enter the quantity and update the qty
+        cin>>qty;
+        if(cin.fail()){
+            cout<< "Failed to enter qty"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product quantity = " << qty<<endl;
         return qty;
     };
 
@@ -52,8 +58,14 @@ class ProductClass{
         float price;
         cout << "Enter Price for the product" << endl;
 
-       // Write code to prompt user to enter the price for the product and update the price 
-
+       // Write code to prompt user to enter the price for the product and update the price
+       cin >> price;
+        if(cin.fail()){
+            cout<< "Failed to enter price"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        } 
+        cout<<"product price = " << price<<endl;
         return price;
     };
 
@@ -62,16 +74,31 @@ class ProductClass{
         string name;
         cout << "Enter Name for the product" << endl;
         
-        // Write code to prompt user to enter the product name. Remember product can be more than word. e.g ("Fentanyl Patch") 
+        // Write code to prompt user to enter the product name. Remember product can be more than word. e.g ("Fentanyl Patch")
+        getline(cin, name);
+        if(cin.fail()){
+            cout<< "Failed to enter name"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product name = " << name<<endl;
         return name;
     };
 
     string promptCategory()
     {
         string categ;
-        cout << "Enter Categroy for the product" << endl;
+        cout << "Enter Category for the product" << endl;
 
         // Write code to prompt user to enter the product Category. Category can be more than one word. e.g ("infectious diseases")
+        
+        getline(cin, categ);
+        if(cin.fail()){
+            cout<< "Failed to enter category"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product category = " << categ<<endl;
         return categ;
     };
 
@@ -81,7 +108,13 @@ class ProductClass{
         cout << "Enter Description for the product" << endl;
 
         // Write code to prompt user to enter the product description. description can be more than one word. e.g ("Drug for infectious diseases")
-
+        getline(cin, desc);
+        if(cin.fail()){
+            cout<< "Failed to enter description"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product description = " << desc<<endl;
         return desc;
     };
 
@@ -91,7 +124,13 @@ class ProductClass{
         cout << "Enter Brand for the product" << endl;
 
         // Write code to prompt user to enter the product brand. Brand can be more than one word. e.g ("Johnson & Johnson")
-
+        getline(cin, brand);
+        if(cin.fail()){
+            cout<< "Failed to enter brand"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product brand = " << brand <<endl;
         return brand;
     };
 
@@ -101,7 +140,13 @@ class ProductClass{
         cout << "Enter Dosage Instruction for the product" << endl;
         
         // Write code to prompt user to enter the product dosage instruction. Dosage instruction can be more than one word. e.g ("One tablet three times a day")
-
+        getline(cin, dsg_inst);
+        if(cin.fail()){
+            cout<< "Failed to enter dosage instructions"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+        }
+        cout<<"product dosage instruction = " << dsg_inst <<endl;
         return dsg_inst;
     }
 
@@ -111,6 +156,14 @@ class ProductClass{
         cout << "Does This Product requires prescription? (1 for yes, 0 for no):" << endl;
 
         // Write code to prompt user to enter if the product requires prescription. Options is only 1 or 0
+        cin >> req_presc;
+        if(cin.fail()){
+            cout<< req_presc <<" is not an appropriate choice"<<endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cin >> req_presc;
+        }
+        cout<<"requires prescription = " << req_presc<<endl;
 
         return req_presc;
     }
@@ -119,6 +172,16 @@ class ProductClass{
     {
 
         // Write code to get all fields necessary to create a product by prompting user based on above methods
+        product.code = generateUniqueCode();
+        product.name = promptName();
+        product.brand = promptBrand();
+        product.category = promptCategory();
+        product.description = promptDescription();
+        product.dosageInstruction = promptDosageInstruction();
+        product.requires_prescription = promptRequirePrescription();
+        product.price = promptPrice();
+        product.quantity = promptQuantity();   
+        
 
         return product;
     };
@@ -129,6 +192,36 @@ class ProductClass{
         string productInJson;
 
         // Write code to product into a json like format. Refer to product.json file for how product needs to formated.
+        productInJson = "{\"code\":\"";
+        productInJson.append(prod.code);
+
+        productInJson.append("\",\"name\":\"");
+        productInJson.append(prod.name);
+
+        productInJson.append("\",\"brand\":\"");
+        productInJson.append(prod.brand);
+
+        productInJson.append("\",\"description\":\"");
+        productInJson.append(prod.description);
+
+        productInJson.append("\",\"dosage_instruction\":\"");
+        productInJson.append(prod.dosageInstruction);
+
+        productInJson.append("\",\"price\":\"");
+        productInJson.append(to_string(prod.price));
+
+        productInJson.append("\",\"quantity\":\"");
+        productInJson.append(to_string( prod.quantity));
+
+        productInJson.append("\",\"category\":\"");
+        productInJson.append(prod.category);
+
+        productInJson.append("\",\"requires_prescription\":\"");
+        productInJson.append(to_string( prod.requires_prescription));
+
+        productInJson.append("\"}")  ;     
+
+
         return productInJson;
     };
 
@@ -138,7 +231,9 @@ class ProductClass{
 
         Product prod;
 
-        // Write convert a string of json like format to a product. 
+        // Write convert a string of json like format to a product.
+
+
         return prod;
     };
 };
