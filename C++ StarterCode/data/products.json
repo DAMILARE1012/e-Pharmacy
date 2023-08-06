@@ -1,3 +1,7 @@
 [
-{"code":"o5ESU732uBx","name":"ssssss","brand":"dddd","description":"gggg","dosage_instruction":"hhhh","price":"444.000000","quantity":"3","category":"ffff","requires_prescription":"1"}
-]
+    {"code":"WARGufUaQy8","name":"","brand":"Brand 1","description":"Desc 1","dosage_instruction":"dosage inst 1","price":13.900000,"quantity":13,"category":"categ 1","requires_prescription":1},
+    {"code":"fwzcO4ZohnD","name":"","brand":"Brand 2","description":"thhf","dosage_instruction":"mkl","price":12345.000000,"quantity":34,"category":"qwe","requires_prescription":0},
+    {"code":"tgtwdNbCnwx","name":"name 1","brand":"br 2","description":"df","dosage_instruction":"dfg","price":123.000000,"quantity":13,"category":"des","requires_prescription":1},
+    {"code":"aHzpqaOqSJy","name":"ss","brand":"dd","description":"ff","dosage_instruction":"hh","price":222.000000,"quantity":333,"category":"gg","requires_prescription":1}
+    ]
+    

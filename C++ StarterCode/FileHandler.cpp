@@ -15,18 +15,18 @@ class FileHandler{
 
     vector<Product> readJsonFile(){
 
+        // Add code here
         vector<Product> prodList;
         vector<string> prodLines;
         string prodLine;
-        ProductClass manProd;
-        Product product;
+        Product manProd;
         
 
         if (filename.empty()){
             filename = "data/products.json";
         }
 
-       
+        cout<<"Reading "<<filename<< " File........."<<endl;
 
         ifstream prodsFile(filename);
 
@@ -36,14 +36,13 @@ class FileHandler{
 
                 if(prodLine.substr(0,1) == "{"){
 
-                    
-                    product = manProd.fromJson(prodLine);
-                    prodList.push_back(product);
+                    manProd.productFromJson(prodLine);
+                    prodList.push_back(manProd);
 
                 }
         }          
         
-       
+        cout<<"Finished Reading "<<filename<< " File........."<<endl;
 
         return prodList;
     };
@@ -51,9 +50,7 @@ class FileHandler{
     void saveToJsonFile(Product p){
 
         vector<Product> pList;
-        ProductClass pClass;
-
-
+        
         pList = readJsonFile();
 
         pList.push_back(p);
@@ -68,7 +65,7 @@ class FileHandler{
             ofstream jsonFile(filename);
 
             jsonFile<<"["<<endl;
-            jsonFile<< pClass.toJson(p)<<endl;
+            jsonFile<< p.toJson()<<endl;
             jsonFile<<"]"<<endl;
 
             return;
@@ -87,10 +84,10 @@ class FileHandler{
     for(int i=0; i<pList.size(); i++){
 
         if(i< pList.size() -1){
-            jsonFile<< pClass.toJson(pList.at(i))<<","<<endl;
+            jsonFile<< pList.at(i).toJson()<<","<<endl;
         }
         else{
-            jsonFile<< pClass.toJson(pList.at(i))<<endl;
+            jsonFile<< pList.at(i).toJson()<<endl;
         }
     }
     jsonFile<<"]"<<endl;      

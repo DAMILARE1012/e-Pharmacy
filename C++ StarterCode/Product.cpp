@@ -2,7 +2,6 @@
 #include <string.h>
 #include <chrono>
 #include <random>
-#include "ProductStruct.h"
 
 
 using namespace std;
@@ -10,11 +9,61 @@ using namespace std::chrono;
 
 
 
+class Product{
 
-class ProductClass{
+    private:
+    int quantity;
+    string name;
+    string brand;
+    string description;
+    string code;
+    float price;
+    string dosageInstruction;
+    string category;
+    bool requires_prescription;
 
     public:
-    Product product;
+
+    string getName(){
+        //TODO Add code that return the Product Name
+        return name;
+    }
+
+    string getBrand(){
+        //TODO Add code that return the Product Brand
+        return brand;
+    }
+
+    string getDecrisption(){
+        //TODO Add code that return the Product Description
+        return description;
+    }
+
+    string getDosageInstraction(){
+        //TODO Add code that return the Product Dosage Instruction
+        return dosageInstruction;
+    }
+
+    string getCategory(){
+        //TODO Add code that return the Product Category
+        return category;
+    }
+    
+    int getQuantity(){
+        //TODO Add code that return the Product Quantity
+        return quantity;
+    }
+
+    float getPrice(){
+        //TODO Add code that return the Product Price
+        return price;
+    }
+
+    bool getRequiresPrescription(){
+        //TODO Add code that return Product Requires Prescription status
+        return requires_prescription;
+    }
+
 
     string generateUniqueCode()
     {
@@ -26,7 +75,7 @@ class ProductClass{
         mt19937 generator(millis.count());
         uniform_int_distribution<int> distribution(0, 100000);
 
-        // generate 32 characters long unique string
+        // generate 10 characters long unique string
 
         for (int i = 0; i <= 10; i++)
         {
@@ -37,203 +86,191 @@ class ProductClass{
         return uniqueCode;
     };
 
-    int promptQuantity()
-    {
-        int qty;
-        cout << "Enter Quantity for the product" << endl;
-        
-        // Write code to prompt user to enter the quantity and update the qty
-        cin>>qty;
-        if(cin.fail()){
-            cout<< "Failed to enter qty"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product quantity = " << qty<<endl;
-        return qty;
-    };
+    string promptTextField(string promptText){
 
-    float promptPrice()
-    {
-        float price;
-        cout << "Enter Price for the product" << endl;
+        // TODO Add code to prompt user for input for any Product string field
+        // method takes text to display e.g: "Enter Product Name:"
+        // it prompts a user and return user input in form of text. Text can be made by multiple words.
+        string usrInput;
+        cout << "Enter the "<<promptText<<" for the product: ";
+        cin.clear();
+        getline(cin, usrInput);
+        return usrInput;
+    }
 
-       // Write code to prompt user to enter the price for the product and update the price
-       cin >> price;
-        if(cin.fail()){
-            cout<< "Failed to enter price"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        } 
-        cout<<"product price = " << price<<endl;
-        return price;
-    };
+    float promptNumberField(string promptText){
+        // TODO Add code to prompt user for input for any Product Numeric field
+        // method takes text to display e.g: "Enter Product Name:"
+        // it prompts a user and return user input in form of text. Text can be made by multiple words.
+        float usrInput;
+        cout << "Enter the "<<promptText<<" for the product: ";
+        cin.clear();
+        cin >> usrInput;
 
-    string promptName()
-    {
-        string name;
-        cout << "Enter Name for the product" << endl;
-        
-        // Write code to prompt user to enter the product name. Remember product can be more than word. e.g ("Fentanyl Patch")
-        getline(cin, name);
-        if(cin.fail()){
-            cout<< "Failed to enter name"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product name = " << name<<endl;
-        return name;
-    };
-
-    string promptCategory()
-    {
-        string categ;
-        cout << "Enter Category for the product" << endl;
-
-        // Write code to prompt user to enter the product Category. Category can be more than one word. e.g ("infectious diseases")
-        
-        getline(cin, categ);
-        if(cin.fail()){
-            cout<< "Failed to enter category"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product category = " << categ<<endl;
-        return categ;
-    };
-
-    string promptDescription()
-    {
-        string desc;
-        cout << "Enter Description for the product" << endl;
-
-        // Write code to prompt user to enter the product description. description can be more than one word. e.g ("Drug for infectious diseases")
-        getline(cin, desc);
-        if(cin.fail()){
-            cout<< "Failed to enter description"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product description = " << desc<<endl;
-        return desc;
-    };
-
-    string promptBrand()
-    {
-        string brand;
-        cout << "Enter Brand for the product" << endl;
-
-        // Write code to prompt user to enter the product brand. Brand can be more than one word. e.g ("Johnson & Johnson")
-        getline(cin, brand);
-        if(cin.fail()){
-            cout<< "Failed to enter brand"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product brand = " << brand <<endl;
-        return brand;
-    };
-
-    string promptDosageInstruction()
-    {
-        string dsg_inst;
-        cout << "Enter Dosage Instruction for the product" << endl;
-        
-        // Write code to prompt user to enter the product dosage instruction. Dosage instruction can be more than one word. e.g ("One tablet three times a day")
-        getline(cin, dsg_inst);
-        if(cin.fail()){
-            cout<< "Failed to enter dosage instructions"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-        }
-        cout<<"product dosage instruction = " << dsg_inst <<endl;
-        return dsg_inst;
+        return usrInput;
     }
 
     bool promptRequirePrescription()
     {
-        bool req_presc;
-        cout << "Does This Product requires prescription? (1 for yes, 0 for no):" << endl;
+        // TODO Add code to prompt user for choosing if Product requires prescription.
+        // User can type 1 or 0. 
+        // it prompts a user and return user input in form of boolean.
+        bool usrInput;
+        cout << "Does This Product requires prescription? (1 for yes, 0 for no):";
 
-        // Write code to prompt user to enter if the product requires prescription. Options is only 1 or 0
-        cin >> req_presc;
-        if(cin.fail()){
-            cout<< req_presc <<" is not an appropriate choice"<<endl;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cin >> req_presc;
-        }
-        cout<<"requires prescription = " << req_presc<<endl;
-
-        return req_presc;
+        cin.clear();
+        cin>>usrInput;
+        return usrInput;
     }
 
-    Product createProduct()
+    void createProduct()
     {
-
-        // Write code to get all fields necessary to create a product by prompting user based on above methods
-        product.code = generateUniqueCode();
-        product.name = promptName();
-        product.brand = promptBrand();
-        product.category = promptCategory();
-        product.description = promptDescription();
-        product.dosageInstruction = promptDosageInstruction();
-        product.requires_prescription = promptRequirePrescription();
-        product.price = promptPrice();
-        product.quantity = promptQuantity();   
-        
-
-        return product;
+        Product prod;
+        // TODO Add code that calls promptTextField() method and prompt user for entering product name and update the name field.
+        name = promptTextField("name");
+        // TODO Add code that calls promptTextField() method and prompt user for entering product brand and update the brand field.
+        brand = promptTextField("brand");
+        // TODO Add code that calls promptTextField() method and prompt user for entering product description and update the decription field.
+        description = promptTextField("description");
+        // TODO Add code that calls promptTextField() method and prompt user for entering product category and update the category field.
+        category = promptTextField("category");
+        // TODO Add code that calls promptTextField() method and prompt user for entering product dosageInstruction and update the dosage instruction field.
+        dosageInstruction = promptTextField("dosage instruction");
+        // TODO Add code that calls promptNumberField() method and prompt user for entering product quantity and update the quantity field.
+        quantity = promptNumberField("quantity");
+        // TODO Add code that calls promptNumberField() method and prompt user for entering product price and update the price field.
+        price = promptNumberField("price");
+        // TODO Add code that calls promptRequirePrescription() method and prompt user for entering product requires presc and update the requiresprescription field.
+        requires_prescription = promptRequirePrescription();
+        // Add code to generate Unique code for product using generateUniqueCode method
+        code = generateUniqueCode();       
     };
 
-    string toJson(Product prod)
+    string toJson()
     {
 
         string productInJson;
 
-        // Write code to product into a json like format. Refer to product.json file for how product needs to formated.
+      // TODO Add code for converting a product to json form from the private declared attributes.
+      // The Output should look like:
+      //{"code":"tgtwdNbCnwx","name":"name 1","brand":"br 2","description":"df","dosage_instruction":"dfg","price":123.000000,"quantity":13,"category":"des","requires_prescription":1}
         productInJson = "{\"code\":\"";
-        productInJson.append(prod.code);
+        productInJson.append(code);
 
         productInJson.append("\",\"name\":\"");
-        productInJson.append(prod.name);
+        productInJson.append(name);
 
         productInJson.append("\",\"brand\":\"");
-        productInJson.append(prod.brand);
+        productInJson.append(brand);
 
         productInJson.append("\",\"description\":\"");
-        productInJson.append(prod.description);
+        productInJson.append(description);
 
         productInJson.append("\",\"dosage_instruction\":\"");
-        productInJson.append(prod.dosageInstruction);
+        productInJson.append(dosageInstruction);
 
-        productInJson.append("\",\"price\":\"");
-        productInJson.append(to_string(prod.price));
+        productInJson.append("\",\"price\":");
+        productInJson.append(to_string(price));
 
-        productInJson.append("\",\"quantity\":\"");
-        productInJson.append(to_string( prod.quantity));
+        productInJson.append(",\"quantity\":");
+        productInJson.append(to_string( quantity));
 
-        productInJson.append("\",\"category\":\"");
-        productInJson.append(prod.category);
+        productInJson.append(",\"category\":\"");
+        productInJson.append(category);
 
-        productInJson.append("\",\"requires_prescription\":\"");
-        productInJson.append(to_string( prod.requires_prescription));
+        productInJson.append("\",\"requires_prescription\":");
+        productInJson.append(to_string( requires_prescription));
 
-        productInJson.append("\"}")  ;     
-
+        productInJson.append("}") ;
 
         return productInJson;
     };
 
 
-    Product fromJson(string txt)
+    
+    void productFromJson(string txt)
     {
+        //TODO Add code to convert a json string product to product object
+        // string is in the form below
+        //{"code":"tgtwdNbCnwx","name":"name 1","brand":"br 2","description":"df","dosage_instruction":"dfg","price":123.000000,"quantity":13,"category":"des","requires_prescription":1}
+        // You need to extract value for each field and update private attributes declared above.
+        string delimiterFinal =  "}";
+        int delimFinal = txt.find(delimiterFinal);
 
-        Product prod;
+        int delim1 = 0;
+        int delim2 = 0;
+        int count = 0;
+        while(count < 10) {                
+            string delimiterStart = ":";
+            string delimiterEnd = ",";         
 
-        // Write convert a string of json like format to a product.
+            int str_len = txt.size();
+            if(str_len<1){
+                break;
+            }
 
+            delim1 = txt.find(delimiterStart, delim1+1);
+            delim2 = txt.find(delimiterEnd, delim2+1);
+            
 
-        return prod;
+            string jsonSubstr = txt.substr((delim1+1) , (delim2 - delim1 - 1 ) );
+            
+            count ++;
+            switch (count)
+            {
+            case 1:
+                jsonSubstr = cleanString(jsonSubstr);
+                code = jsonSubstr;
+                break;
+            case 2:
+                jsonSubstr = cleanString(jsonSubstr);
+                name = jsonSubstr;
+                break;
+            case 3:
+                jsonSubstr = cleanString(jsonSubstr);
+                brand = jsonSubstr;
+                break;
+            case 4:
+                jsonSubstr = cleanString(jsonSubstr);
+                description = jsonSubstr;
+                break;
+            case 5:
+                jsonSubstr = cleanString(jsonSubstr);
+                dosageInstruction = jsonSubstr;
+                break;
+            case 6:
+                price = stof(jsonSubstr);
+                break;
+            case 7:
+                quantity = stoi(jsonSubstr);
+                break;
+            case 8:
+                jsonSubstr = cleanString(jsonSubstr);
+                category = jsonSubstr;
+                break;
+            case 9:
+                requires_prescription = stoi(jsonSubstr);
+                break;
+
+            default:
+                break;
+            }
+
+            }
     };
+
+    string cleanString(string txt)
+    {
+        char *s = (char *)calloc(txt.length() - 2, sizeof(char));
+        int c = 0;
+        for (int i = 1; i < txt.length() - 1; i++)
+        {
+            if (txt[i] == '"')
+                break;
+            s[c] = txt[i];
+            c++;
+        }
+        return s;
+    }
+
 };

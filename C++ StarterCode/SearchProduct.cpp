@@ -19,7 +19,10 @@ public:
 
     vector<Product> searchByName(string name){
 
-        // Add code Here
+        // TODO
+        //Add code to search by name. Searching is not case sensitive it means 
+        //for input like: "name" products with names like "Name 1", "Product name" needs to included in the found results.
+        
         vector<Product> prodList;
         vector<Product> foundProducts;
         Product product;
@@ -28,16 +31,19 @@ public:
         for(int i=0; i< prodList.size(); i++){
             product = prodList.at(i);
 
-            if( to_lowercase(product.name).find(to_lowercase(name)) != std::string::npos){
+            if( to_lowercase(product.getName()).find(to_lowercase(name)) != std::string::npos){
                 foundProducts.push_back(product);
             }
         }
         return foundProducts;
+    
     };
 
     vector<Product> searchByCategory(string categ){
 
-        // Add code Here
+        // TODO
+        //Add code to search by category. Searching is not case sensitive it means 
+        //for input like: "categ" products with category like "category 1", "Product category" needs to included in the found results.
         vector<Product> prodList;
         vector<Product> foundProducts;
         Product product;
@@ -46,7 +52,7 @@ public:
         for(int i=0; i< prodList.size(); i++){
             product = prodList.at(i);
 
-            if( to_lowercase(product.category).find(to_lowercase(categ)) != std::string::npos){
+            if( to_lowercase(product.getCategory()).find(to_lowercase(categ)) != std::string::npos){
                 foundProducts.push_back(product);
             }
         }
@@ -54,7 +60,9 @@ public:
     };
 
     vector<Product> searchByBrand(string brand){
-        // Add code here
+      // TODO
+        //Add code to search by brand. Searching is not case sensitive it means 
+        //for input like: "br" products with names like "Brand 1", "brand name" needs to included in the found results.
         vector<Product> prodList;
         vector<Product> foundProducts;
         Product product;
@@ -63,7 +71,7 @@ public:
         for(int i=0; i< prodList.size(); i++){
             product = prodList.at(i);
 
-            if( to_lowercase(product.brand).find(to_lowercase(brand)) != std::string::npos){
+            if( to_lowercase(product.getBrand()).find(to_lowercase(brand)) != std::string::npos){
                 foundProducts.push_back(product);
             }
         }
@@ -72,18 +80,18 @@ public:
 
     void showSearchResult(vector<Product> plist, string sTxt)
     {
-        // Add code Here
-        ProductClass pClass;
+        // TODO
+        //Add code to display Search results
+
         Product p;
 
         cout<<"Result for "<<sTxt<< " Products in Json Format:\n"<<endl;
         cout<<"..........................."<<endl;
         for(int i=0; i< plist.size();i++){
             p = plist.at(i);
-            cout<< pClass.toJson(p)<<endl;
+            cout<< p.toJson()<<endl;
         }
 
         cout<<"..........................."<<endl;
-
     }
 };
