@@ -94,4 +94,57 @@ class FileHandler{
 
 
     }
+
+    void saveToJsonFile(vector <Product> newProdList){
+        vector<Product> pList;
+        Product p;
+
+        pList = readJsonFile();
+        pList.clear();
+
+        for(int i = 0; i < newProdList.size(); i++){
+            p = newProdList.at(i);
+            pList.push_back(p);
+        }
+        
+
+        
+
+         // Check if the file exists.
+        ifstream input_file(filename);
+
+        if (!input_file.good()) {
+            // The file does not exist.
+            cout << "First Record ........." << endl;
+
+            ofstream jsonFile(filename);
+
+            jsonFile<<"["<<endl;
+            jsonFile<< p.toJson()<<endl;
+            jsonFile<<"]"<<endl;
+
+            return;
+
+        }
+
+        // Delete the file.
+    int ret = remove(filename.c_str());
+    if (ret != 0) {
+        std::cout << "Error deleting file: " << strerror(errno) << "\n";
+        return ;
+    }
+
+    ofstream jsonFile(filename);
+    jsonFile<<"["<<endl;
+    for(int i=0; i<pList.size(); i++){
+
+        if(i< pList.size() -1){
+            jsonFile<< pList.at(i).toJson()<<","<<endl;
+        }
+        else{
+            jsonFile<< pList.at(i).toJson()<<endl;
+        }
+    }
+    jsonFile<<"]"<<endl;
+    }
 };

@@ -61,12 +61,19 @@ public:
     }
 
     // TODO Add code for Updating a product
-    void updateProduct(string productCode){
-        
+    void updateProduct(string productName){
+        deleteProduct(productName);
+        addProduct();
+
     }
     // TODO Add code for deleting a product
-    void deleteProduct(string productCode){
-
+    void deleteProduct(string productName){
+        SearchProduct sProd;
+        vector<Product> newProdList;
+        newProdList = sProd.searchAndDelete(productName);
+        FileHandler fHandler;
+        Product p;
+        fHandler.saveToJsonFile(newProdList);        
     }
     
 };
@@ -104,7 +111,7 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
             }
             vector<Product> foundProducts;
-            foundProducts=sProd.searchByName(searchName);
+            foundProducts = sProd.searchByName(searchName);
             sProd.showSearchResult(foundProducts, searchName);
             
         }
@@ -140,13 +147,19 @@ int main()
         }
         // Handling the 'update product' choice
         else if(choice == 5){
-           string productCode;
-           prodManager.updateProduct(productCode);             
+           string productName;
+           cout << "Enter the name of the product you want to update: ";
+            cin.clear();
+            getline(cin, productName);
+           prodManager.updateProduct(productName);             
         }
         // Handling the 'delete product' choice
         else if(choice == 6){
-            string productCode;
-            prodManager.deleteProduct(productCode);
+            string productName;
+            cout << "Enter the name of the product(s) you want to delete: ";
+            cin.clear();
+            getline(cin, productName);
+            prodManager.deleteProduct(productName);
         }
 
         cout<<"Exiting the Application..."<<endl;

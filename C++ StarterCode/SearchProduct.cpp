@@ -78,6 +78,37 @@ public:
         return foundProducts;
     };
 
+    vector<Product> searchAndDelete(string name){
+        
+        vector<Product> prodList;
+        vector<Product> foundProducts;
+        Product product;
+        prodList = fHandler.readJsonFile();
+
+        for(int i=0; i< prodList.size(); i++){
+            product = prodList.at(i);
+
+            if( to_lowercase(product.getName()).find(to_lowercase(name)) != std::string::npos){
+                foundProducts.push_back(product);
+                cout<<"**********Caution*************"<<endl;
+                cout <<"Are you sure you want to permanently alter "<< foundProducts.size()<<" record(s)?"<<endl;
+                cout <<"Enter 1 to continue, or 0 to cancel this operation: ";
+                int usrConfirmation = 0;
+                cin >> usrConfirmation;
+                if(cin.fail() || usrConfirmation<0 || usrConfirmation>1){
+                    cout << "Incorrect response. Please retry: "<<endl;
+                    cin >> usrConfirmation;            
+                }
+                if(usrConfirmation == 1 ){
+                    prodList.erase(prodList.begin()+i);
+                }
+                
+            }
+        }
+        return prodList;
+    
+    };
+
     void showSearchResult(vector<Product> plist, string sTxt)
     {
         // TODO
