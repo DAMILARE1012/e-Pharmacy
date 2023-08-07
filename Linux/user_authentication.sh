@@ -25,8 +25,8 @@ hash_password() {
 register_credentials() {
     # Insert code to register add the created user to a file called credentials.txt
     echo "----Registration----"
-    read -p "Enter Username: " username
-    read -s -p "Enter Password" password
+    read -p "Enter Username: " username_reg
+    read -s -p "Enter Password" password_reg
     echo "" # Add a newline after reading the password
     echo -n "Enter Full Name: "
     read full_name
@@ -45,13 +45,13 @@ register_credentials() {
     done
     
     # Check if the user already exists
-    if grep -q "^$username:" "$credentials_file"; then
-        echo "Error: User '$username' already exists."
+    if grep -q "^$username_reg:" "$credentials_file"; then
+        echo "Error: User '$username_reg' already exists."
     else
     local refined_password=$(hash_password "$password")
-        echo "$username:$refined_password:$full_name:$role:$login_status" >> "$credentials_file"
+        echo "$username_reg:$refined_password:$full_name:$role:$login_status" >> "$credentials_file"
         echo ""
-        echo -e "User '$username' Registration successful. You can now log in.\n"
+        echo -e "User '$username_reg' Registration successful. You can now log in.\n"
     fi
 }
 
@@ -112,8 +112,7 @@ admin_menu() {
                 esac
 
                 echo ""
-            done
-    return 0  
+            done 
 }
 
 # Function for the user menu
@@ -176,13 +175,21 @@ logout_user() {
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
             echo "Logout successful..."
-            # display_menu
         fi
+        return
 }
 
 exit_user(){
-    echo "Exiting User System. Goodbye!"
-            exit 0         
+    # Change the news state to 0
+        local status=$(grep "^$username:" "$credentials_file")
+        if [[ "$login_status"=="1" ]]; then
+            echo "Updating login status to 0"
+            new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
+            sed -i "s~$status~$new_status~" "$credentials_file"
+            echo "Exiting User System. Goodbye!"
+            exit 0   
+        fi
+          
 }
 
 while true; do
