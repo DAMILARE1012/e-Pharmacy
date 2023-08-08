@@ -168,8 +168,48 @@ admin_menu() {
 
 # Function for the user menu
 user_menu() {
-    echo "This is a normal user menu..."
-    exit 0
+    echo "This is the normal user menu..."
+    echo "Options: "
+    echo "1. Logout"
+    echo "2. Exit"
+    echo -n "Enter your choice: "
+    read choice
+
+    case "$choice" in
+        1)
+            logout_user
+            ;;
+        2)
+            exit_user
+            ;;
+        *)
+            echo "Invalid choice. Please try again."
+            user_menu
+            ;;
+    esac
+}
+
+# Function for the Salesperson menu
+salesperson_menu() {
+    echo "This is the salesperson user menu..."
+    echo "options: "
+    echo "1. Logout"
+    echo "2. Exit"
+    echo -n "Enter your choice: "
+    read choice
+
+    case "$choice" in
+        1)
+                logout_user
+                ;;
+        2)
+                exit_user
+                ;;
+        *)
+            echo "Invalid choice. Please try again."
+            salesperson_menu
+            ;;
+    esac
 }
 
 # Main script execution starts here
@@ -218,7 +258,7 @@ login_user() {
         elif [ "$user_role" == "admin" ]; then
             admin_menu
         else
-            echo "Sales person page"
+            salesperson_menu
         fi
 
     else
@@ -231,11 +271,11 @@ login_user() {
 logout_user() {
     # Change the news state to 0
         local status=$(grep "^$username:" "$credentials_file")
-        if [[ "$login_status"=="1" ]]; then
-            echo -e "\nUpdating login status to 0\n"
+        if [[ "$login_status" == "1" ]]; then
+            echo -e "\nUpdating login status to 0"
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
-            echo -e "\nLogout successful...\n"
+            echo -e "\nLogout successful..."
         fi
         return
 }
