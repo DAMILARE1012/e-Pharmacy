@@ -30,20 +30,8 @@ register_credentials() {
     echo "" # Add a newline after reading the password
     echo -n "Enter Full Name: "
     read full_name
-    while true; do
-    echo -n "Enter Role (admin/normal/salesperson): "
-    read role
-
-    case "$role" in
-        admin|normal|salesperson)
-            break  # Exit the loop when a valid role is entered
-            ;;
-        *)
-            echo "Error: Invalid role. Please enter admin, normal, or salesperson."
-            ;;
-    esac
-    done
-    
+    role=normal
+        
     # Check if the user already exists
     if grep -q "^$username_reg:" "$credentials_file"; then
         echo "Error: User '$username_reg' already exists."
@@ -79,15 +67,73 @@ verify_credentials() {
 # Function for the admin menu
 admin_menu() {
 
+        # Function to register new credentials
+        adminReg_cred() {
+        # Insert code to register add the created user to a file called credentials.txt
+        echo "----Registration----"
+        read -p "Enter Username: " username_reg_2
+        read -s -p "Enter Password" password_reg_2
+        echo "" # Add a newline after reading the password
+        echo -n "Enter Full Name: "
+        read full_name
+        while true; do
+        echo -n "Enter Role (admin/normal/salesperson): "
+        read role
+
+        case "$role" in
+            admin|normal|salesperson)
+                break  # Exit the loop when a valid role is entered
+                ;;
+            *)
+                echo "Error: Invalid role. Please enter admin, normal, or salesperson."
+                ;;
+        esac
+        done
+        
+        # Check if the user already exists
+        if grep -q "^$username_reg_2:" "$credentials_file"; then
+            echo "Error: User '$username_reg_2' already exists."
+        else
+        local refined_password=$(hash_password "$password")
+            echo "$username_reg_2:$refined_password:$full_name:$role:0" >> "$credentials_file"
+            echo ""
+            echo -e "User '$username_reg_2' Registration successful. You can now log in.\n"
+        fi
+    }
     # write a logic that allows a user logged in as admin to create an account. 
     # This function must allow the logged in user to create many users. 
     
+    delete_user(){
+        echo -n "Enter the username to delete: "
+        read username
+
+        # Check if the file exists
+        if [ ! -f "$credentials_file" ]; then
+            echo "File not found"
+            return 1
+        fi
+
+        # Check if the username exists in the file
+        if grep -q "^$username:" "$credentials_file"; then
+
+            # Delete the line containing the username from the file
+            sed -i "/^$username:/d" "$credentials_file"
+
+            echo "User $username deleted from $credentials_file"
+            
+        else
+            echo "User $username not found in $credentials_file"
+        fi
+
+    }
+
     # Write your code here  
     admin_display_menu() {
                 echo "Welcome to the admin dashboard."
                 echo "1. Create an Account"
-                echo "2. Logout"
-                echo "3. Exit"
+                echo "2. Delete an Account"
+                echo "3. Logout"
+                echo "4. Exit"
                 echo -n "Enter your choice: "
             }
 
@@ -97,13 +143,16 @@ admin_menu() {
 
                 case "$choice" in
                     1)
-                            register_credentials
+                            adminReg_cred
                             ;;
                     2)      
+                            delete_user
+                            ;;
+                    3)      
                             logout_user
                             return
                             ;;
-                    3) 
+                    4) 
                             exit_user
                             ;;
                     *)
@@ -113,6 +162,8 @@ admin_menu() {
 
                 echo ""
             done 
+
+            # admin_display_menu
 }
 
 # Function for the user menu
@@ -147,17 +198,27 @@ login_user() {
         local hashed_pass=$(echo -n "$pass$salt" | sha256sum | awk '{print $1}')
         local login_status=$(echo "$user_info" | cut -d ':' -f 5)
         
-        # Change the news state to 1
+        
         local status=$(grep "^$username:" "$credentials_file")
+        echo "$status"
+        # Change the news state to 1
         if [[ "$login_status"=="0" ]]; then
             echo "You're welcome $username... You're the only active user for now..."
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="1"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
         fi
 
-        # Admin Privilege
-        if [[ "$role"=="admin" ]]; then
+        # Extract the value of the 'role' variable
+        local user_role=$(echo "$user_info" | cut -d ':' -f 4)
+
+        # Normal User - Display Dashboard
+        if [ "$user_role" == "normal" ]; then
+            user_menu
+        # Admin User - Display Dashboard
+        elif [ "$user_role" == "admin" ]; then
             admin_menu
+        else
+            echo "Sales person page"
         fi
 
     else
@@ -171,10 +232,10 @@ logout_user() {
     # Change the news state to 0
         local status=$(grep "^$username:" "$credentials_file")
         if [[ "$login_status"=="1" ]]; then
-            echo "Updating login status to 0"
+            echo -e "\nUpdating login status to 0\n"
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
-            echo "Logout successful..."
+            echo -e "\nLogout successful...\n"
         fi
         return
 }
@@ -183,10 +244,10 @@ exit_user(){
     # Change the news state to 0
         local status=$(grep "^$username:" "$credentials_file")
         if [[ "$login_status"=="1" ]]; then
-            echo "Updating login status to 0"
+            echo "\nUpdating login status to 0\n"
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
-            echo "Exiting User System. Goodbye!"
+            echo "\nExiting User System. Goodbye!\n"
             exit 0   
         fi
           
