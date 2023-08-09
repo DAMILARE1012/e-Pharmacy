@@ -92,7 +92,7 @@ class Product{
         // method takes text to display e.g: "Enter Product Name:"
         // it prompts a user and return user input in form of text. Text can be made by multiple words.
         string usrInput;
-        cout << "Enter the "<<promptText<<" for the product: ";
+        cout << endl <<"Enter the "<<promptText<<" for the product: ";
         getline(cin, usrInput);
         return usrInput;
     }
@@ -104,7 +104,7 @@ class Product{
         float usrInput;
         string usrInputStr;
 
-        cout << "Enter the "<<promptText<<" for the product: ";
+        cout << endl << "Enter the "<<promptText<<" for the product: ";
         getline(cin,usrInputStr);
         stringstream(usrInputStr) >> usrInput;
 
@@ -118,7 +118,7 @@ class Product{
         // it prompts a user and return user input in form of boolean.
         bool usrInput;
         string usrInputStr;
-        cout << "Does This Product requires prescription? (1 for yes, 0 for no):";
+        cout <<  endl <<"Does This Product requires prescription? (1 for yes, 0 for no):";
         getline(cin,usrInputStr);
         stringstream(usrInputStr) >> usrInput;
         return usrInput;

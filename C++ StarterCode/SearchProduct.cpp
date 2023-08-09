@@ -35,6 +35,9 @@ public:
                 foundProducts.push_back(product);
             }
         }
+        if (foundProducts.size()==0){
+            cout << endl <<"No matching products" <<endl;
+        }
         return foundProducts;
     
     };
@@ -56,6 +59,9 @@ public:
                 foundProducts.push_back(product);
             }
         }
+        if (foundProducts.size()==0){
+            cout << endl <<"No matching products" <<endl;
+        }
         return foundProducts;
     };
 
@@ -75,6 +81,9 @@ public:
                 foundProducts.push_back(product);
             }
         }
+        if (foundProducts.size()==0){
+            cout << endl <<"No matching products" <<endl;
+        }
         return foundProducts;
     };
 
@@ -90,7 +99,7 @@ public:
 
             if( to_lowercase(product.getName()).find(to_lowercase(name)) != std::string::npos){
                 foundProducts.push_back(product);
-                cout<<endl << "**********Caution*************"<<endl;
+                cout<<endl << endl <<"**********Caution*************"<<endl;
                 cout <<"Are you sure you want to permanently alter "<< foundProducts.size()<<" record(s)?"<<endl;
                 cout <<"Enter 1 to continue, or 0 to cancel this operation: ";
                 int usrConfirmation = 0;
@@ -105,6 +114,9 @@ public:
                 }
                 
             }
+        }
+        if (prodList.size()==0){
+            cout << endl <<"No matching products" <<endl;
         }
         cin.clear();
         return prodList;

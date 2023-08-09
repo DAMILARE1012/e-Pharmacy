@@ -171,7 +171,7 @@ int main()
         // Handling the 'update product' choice
         else if(choice == 5){
            string productName;
-           cout << "Enter the name of the product you want to update: ";
+           cout << endl <<"Enter the name of the product you want to update: ";
             cin.clear();
             getline(cin, productName);
            prodManager.updateProduct(productName);             
@@ -179,7 +179,7 @@ int main()
         // Handling the 'delete product' choice
         else if(choice == 6){
             string productName;
-            cout << "Enter the name of the product(s) you want to delete: ";
+            cout << endl <<"Enter the name of the product(s) you want to delete: ";
             cin.clear();
             getline(cin, productName);
             prodManager.deleteProduct(productName);
