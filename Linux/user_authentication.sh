@@ -124,7 +124,6 @@ admin_menu() {
         else
             echo "User $username not found in $credentials_file"
         fi
-
     }
 
     # Write your code here  
@@ -134,7 +133,7 @@ admin_menu() {
                 echo "2. Delete an Account"
                 echo "3. Logout"
                 echo "4. Exit"
-                echo -n "Enter your choice: "
+                echo -n "Enter your choice: " 
             }
 
             while true; do
@@ -218,8 +217,7 @@ display_menu() {
     echo "Welcome to the authentication system."
     echo "1. Login"
     echo "2. Register"
-    echo "3. Logout"
-    echo "4. Exit"
+    echo "3. Exit"
     echo -n "Enter your choice: "
 }
 # write a script that allows a system user to login, register, logout and exit from the system
@@ -238,9 +236,8 @@ login_user() {
         local hashed_pass=$(echo -n "$pass$salt" | sha256sum | awk '{print $1}')
         local login_status=$(echo "$user_info" | cut -d ':' -f 5)
         
-        
         local status=$(grep "^$username:" "$credentials_file")
-        echo "$status"
+
         # Change the news state to 1
         if [[ "$login_status"=="0" ]]; then
             echo "You're welcome $username... You're the only active user for now..."
@@ -269,25 +266,27 @@ login_user() {
 
 # Function to handle user logout
 logout_user() {
-    # Change the news state to 0
-        local status=$(grep "^$username:" "$credentials_file")
-        if [[ "$login_status" == "1" ]]; then
-            echo -e "\nUpdating login status to 0"
-            new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
-            sed -i "s~$status~$new_status~" "$credentials_file"
-            echo -e "\nLogout successful..."
-        fi
-        return
+    local status=$(grep "^$username:" "$credentials_file")
+    local login_status=$(echo "$status" | awk -F':' '{print $6}')
+    echo $login_status
+
+    if [[ "$login_status" == "1" ]]; then
+        echo -e "\nUpdating login status to 0"
+        new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
+        sed -i "s~$status~$new_status~" "$credentials_file"
+        echo -e "\nLogout successful..."
+    fi
+    return
 }
+
 
 exit_user(){
     # Change the news state to 0
         local status=$(grep "^$username:" "$credentials_file")
         if [[ "$login_status"=="1" ]]; then
-            echo "\nUpdating login status to 0\n"
             new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
             sed -i "s~$status~$new_status~" "$credentials_file"
-            echo "\nExiting User System. Goodbye!\n"
+            echo "Exiting User System. Goodbye!"
             exit 0   
         fi
           
@@ -305,15 +304,8 @@ while true; do
                 register_credentials
                 ;;
         3)
-            if [ -n "$username" ]; then
-                logout_user
-                
-            else
-                echo "You are not logged in."
-            fi
+            exit_user
             ;;
-        4)
-            exit_user;;
         *)
             echo "Invalid choice. Please try again."
             ;;
