@@ -99,14 +99,13 @@ echo "Welcome to the login page. Please enter your username and password."
 logout_user() {
     local status=$(grep "^$username:" "$credentials_file")
     local login_status=$(echo "$status" | awk -F':' '{print $6}')
-    echo $login_status
 
     if [[ "$login_status" == "1" ]]; then
         new_status=$(echo "$status" | awk 'BEGIN{FS=OFS=":"} {$6="0"; print}')
         sed -i "s~$status~$new_status~" "$credentials_file"
-        echo -e "\nLogout successful..."   
+        echo -e "\nLogout successful..." 
+        exit 0  
     fi
-    display_menu
 }
 
 # Exit Function
@@ -190,7 +189,6 @@ admin_menu() {
                             ;;
                     3)      
                             logout_user
-                            break
                             ;;
                     *)
                         echo "Invalid choice. Please try again."
@@ -265,6 +263,7 @@ display_menu() {
     echo "3. Exit"
     echo -n "Enter your choice: "
 }
+
 # write a script that allows a system user to login, register, logout and exit from the system
 while true; do
     display_menu
