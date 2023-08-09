@@ -93,7 +93,6 @@ class Product{
         // it prompts a user and return user input in form of text. Text can be made by multiple words.
         string usrInput;
         cout << "Enter the "<<promptText<<" for the product: ";
-        cin.clear();
         getline(cin, usrInput);
         return usrInput;
     }
@@ -103,9 +102,11 @@ class Product{
         // method takes text to display e.g: "Enter Product Name:"
         // it prompts a user and return user input in form of text. Text can be made by multiple words.
         float usrInput;
+        string usrInputStr;
+
         cout << "Enter the "<<promptText<<" for the product: ";
-        cin.clear();
-        cin >> usrInput;
+        getline(cin,usrInputStr);
+        stringstream(usrInputStr) >> usrInput;
 
         return usrInput;
     }
@@ -116,16 +117,15 @@ class Product{
         // User can type 1 or 0. 
         // it prompts a user and return user input in form of boolean.
         bool usrInput;
+        string usrInputStr;
         cout << "Does This Product requires prescription? (1 for yes, 0 for no):";
-
-        cin.clear();
-        cin>>usrInput;
+        getline(cin,usrInputStr);
+        stringstream(usrInputStr) >> usrInput;
         return usrInput;
     }
 
     void createProduct()
     {
-        Product prod;
         // TODO Add code that calls promptTextField() method and prompt user for entering product name and update the name field.
         name = promptTextField("name");
         // TODO Add code that calls promptTextField() method and prompt user for entering product brand and update the brand field.
@@ -145,6 +145,21 @@ class Product{
         // Add code to generate Unique code for product using generateUniqueCode method
         code = generateUniqueCode();       
     };
+
+    void updateProductField(int updateAttribute){
+        switch (updateAttribute)
+            {
+            case 1:
+                price = promptNumberField("price");
+                break;
+            case 2:
+                quantity = promptNumberField("quantity");
+                break;            
+            default:
+                cout<<"Incorrect entry!"<<endl;
+                break;
+            } 
+    }
 
     string toJson()
     {
@@ -205,6 +220,7 @@ class Product{
             string delimiterEnd = ",";         
 
             int str_len = txt.size();
+            //if empty
             if(str_len<1){
                 break;
             }

@@ -25,7 +25,7 @@ class FileHandler{
         if (filename.empty()){
             filename = "data/products.json";
         }
-
+        
         cout<<"Reading "<<filename<< " File........."<<endl;
 
         ifstream prodsFile(filename);
@@ -43,7 +43,7 @@ class FileHandler{
         }          
         
         cout<<"Finished Reading "<<filename<< " File........."<<endl;
-
+        prodsFile.close();
         return prodList;
     };
 
@@ -69,7 +69,7 @@ class FileHandler{
             jsonFile<<"]"<<endl;
 
             return;
-
+            
         }
 
         // Delete the file.
@@ -92,7 +92,7 @@ class FileHandler{
     }
     jsonFile<<"]"<<endl;      
 
-
+    jsonFile.close();
     }
 
     void saveToJsonFile(vector <Product> newProdList){
@@ -124,7 +124,7 @@ class FileHandler{
             jsonFile<<"]"<<endl;
 
             return;
-
+        jsonFile.close();
         }
 
         // Delete the file.
@@ -146,5 +146,6 @@ class FileHandler{
         }
     }
     jsonFile<<"]"<<endl;
+    jsonFile.close();
     }
 };

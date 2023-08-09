@@ -1,4 +1,6 @@
 [
-{"code":"uGO9Hh9spGC","name":"codeine","brand":"Codeine Ltd","description":"syrup","dosage_instruction":"1 by 1","price":22.000000,"quantity":55,"category":"cough syrup","requires_prescription":1},
-{"code":"BwWYmLFSpsy","name":"","brand":"Strepsils","description":"tamu sana","dosage_instruction":"once when needed","price":3.000000,"quantity":455,"category":"sweet","requires_prescription":1}
+{"code":"GcSld0scXDW","name":"Panadol Extra","brand":"Panadol","description":"","dosage_instruction":"1 by 1","price":22.000000,"quantity":9000,"category":"","requires_prescription":1},
+{"code":"O8C3Ww5YsIc","name":"Calpol","brand":"Nestle","description":"Syrup","dosage_instruction":"2 by 2","price":12.000000,"quantity":333,"category":"Cough","requires_prescription":1},
+{"code":"Plh5gBqsWRp","name":"new prod","brand":"new brand","description":"new desc","dosage_instruction":"new dsg","price":2.000000,"quantity":400,"category":"new categ","requires_prescription":1},
+{"code":"HYUvPJInHea","name":"honey","brand":"natural","description":"mitishimba","dosage_instruction":"4 by 4","price":123.000000,"quantity":452,"category":"herbal","requires_prescription":1}
 ]

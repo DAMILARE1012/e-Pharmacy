@@ -31,7 +31,7 @@ public:
         for(int i=0; i< prodList.size(); i++){
             product = prodList.at(i);
 
-            if( to_lowercase(product.getName()).find(to_lowercase(name)) != std::string::npos){
+            if( to_lowercase(product.getName()).find(to_lowercase(name)) != string::npos){
                 foundProducts.push_back(product);
             }
         }
@@ -52,7 +52,7 @@ public:
         for(int i=0; i< prodList.size(); i++){
             product = prodList.at(i);
 
-            if( to_lowercase(product.getCategory()).find(to_lowercase(categ)) != std::string::npos){
+            if( to_lowercase(product.getCategory()).find(to_lowercase(categ)) != string::npos){
                 foundProducts.push_back(product);
             }
         }
@@ -90,14 +90,15 @@ public:
 
             if( to_lowercase(product.getName()).find(to_lowercase(name)) != std::string::npos){
                 foundProducts.push_back(product);
-                cout<<"**********Caution*************"<<endl;
+                cout<<endl << "**********Caution*************"<<endl;
                 cout <<"Are you sure you want to permanently alter "<< foundProducts.size()<<" record(s)?"<<endl;
                 cout <<"Enter 1 to continue, or 0 to cancel this operation: ";
                 int usrConfirmation = 0;
-                cin >> usrConfirmation;
+                string usrConfirmationStr;
+                getline(cin,usrConfirmationStr);
+                stringstream(usrConfirmationStr) >> usrConfirmation;
                 if(cin.fail() || usrConfirmation<0 || usrConfirmation>1){
-                    cout << "Incorrect response. Please retry: "<<endl;
-                    cin >> usrConfirmation;            
+                    cout << "Incorrect response."<<endl;            
                 }
                 if(usrConfirmation == 1 ){
                     prodList.erase(prodList.begin()+i);
@@ -105,6 +106,7 @@ public:
                 
             }
         }
+        cin.clear();
         return prodList;
     
     };

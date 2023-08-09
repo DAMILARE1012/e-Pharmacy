@@ -18,7 +18,6 @@ public:
         bool isChoiceOk=false;
         int selectedChoice = -1;
         
-        // Write code to show user the selection Menu as per shared sample output
         while (!isChoiceOk)
         {
             cout<<"Menu:"<<endl;
@@ -30,17 +29,14 @@ public:
             cout<<"6. Delete product"<<endl;
             cout<<"7. Exit"<<endl;
 
-            // User to enter a value between 1 and 5
             cout<<"Enter your choice: ";
 
-            // Add here, code for reading user input and update user choice
+            //reading user input and update user choice
             string selectedChoiceStr;
             getline(cin,selectedChoiceStr);
             stringstream(selectedChoiceStr) >> selectedChoice;
          
             if(cin.fail() || selectedChoice < 1 || selectedChoice > 7 ){
-
-                cout<< selectedChoice << " is not a valid choice! "<<endl;
                 cout<< "Enter a valid choice"<<endl;
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
@@ -62,8 +58,36 @@ public:
 
     // TODO Add code for Updating a product
     void updateProduct(string productName){
+        //finding the product(s) to update by name
+        SearchProduct sProd;
+        vector<Product> updateProdList;
+        updateProdList = sProd.searchByName(productName);
+        sProd.showSearchResult(updateProdList, productName);
+
         deleteProduct(productName);
-        addProduct();
+
+        int updateAttribute;
+        string updateAttributeStr;
+
+
+        //loop through all the products that match the search parameters
+        for(int i=0; i < updateProdList.size(); i++){
+            prod = updateProdList.at(i);
+            cout << "Select the attribute that you want to change: "<<endl;
+            cout<<"1. price"<<endl;
+            cout<<"2. quantity"<<endl;
+            cout<<"3. CANCEL UPDATE OPERATION"<<endl;
+
+            getline(cin,updateAttributeStr);
+            stringstream(updateAttributeStr) >> updateAttribute;
+
+            if (updateAttribute != 3)
+            {
+                prod.updateProductField(updateAttribute);
+            }
+            FileHandler fHandler;
+            fHandler.saveToJsonFile(prod);
+        }
 
     }
     // TODO Add code for deleting a product
@@ -72,7 +96,6 @@ public:
         vector<Product> newProdList;
         newProdList = sProd.searchAndDelete(productName);
         FileHandler fHandler;
-        Product p;
         fHandler.saveToJsonFile(newProdList);        
     }
     
@@ -161,10 +184,9 @@ int main()
             getline(cin, productName);
             prodManager.deleteProduct(productName);
         }
-
-        cout<<"Exiting the Application..."<<endl;
-        return 0;
-    }   
+        choice = prodManager.getMenu();
+    }
+     
     cout<<"Exiting the Application..."<<endl;
 
 
