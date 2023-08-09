@@ -30,9 +30,17 @@ register_credentials() {
     while true; do
         read -s -p "Enter Password: " password_reg
         echo ""  # Add a newline after reading the password
+        read -s -p "Confirm Password " password_reg2
+        echo "" # Add a new line after reading the password
 
         if [ -z "$password_reg" ]; then
             echo "Password cannot be empty. Please try again."
+        elif [ "$password_reg" != "$password_reg2" ]; then
+            echo "PPassword not matching, please try again..."
+            read -s -p "Enter Password Again: " password_reg
+            echo ""  # Add a newline after reading the password
+            read -s -p "Confirm Password Again: " password_reg2
+            echo "" # Add a new line after reading the password
         else
             break
         fi
@@ -64,10 +72,8 @@ echo "Welcome to the login page. Please enter your username and password."
     if [[ -n "$user_info" ]]; then
         local stored_pass=$(echo "$user_info" | cut -d ':' -f 1)
         local salt=$(echo "$user_info" | cut -d ':' -f 2)
-        
         local hashed_pass=$(echo -n "$pass$salt" | sha256sum | awk '{print $1}')
         local login_status=$(echo "$user_info" | cut -d ':' -f 5)
-        
         local status=$(grep "^$username:" "$credentials_file")
 
         # Change the news state to 1
