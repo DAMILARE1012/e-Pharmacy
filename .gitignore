@@ -1,3 +1,4 @@
 .vscode
 template-code-python/data/.logged_in
 template-code-python/data/.logged_in:Zone.Identifier
+template-code-python/order_management/__pycache__
