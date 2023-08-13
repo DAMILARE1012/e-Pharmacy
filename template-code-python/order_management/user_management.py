@@ -17,8 +17,21 @@ class UserManagement:
     def get_logged_in_user(self) -> User:
         """Returns the logged in user
         """
-        #TODO: Read the file, and return the object corresponding to the user in the file
+        try:
+            with open(self.status_file) as f:
+                username = f.read().strip()
+            user = self.get_user_details(username)  
+            if user:
+                print("You're welcome") # Print to test role attribute
+                return user
+            else:
+                raise Exception("Logged in user not found")
+        
+        except FileNotFoundError:
+            raise Exception("Status file not found") 
 
+        #TODO: Read the file, and return the object corresponding to the user in the file
+        
         #TODO: If the account is not logged in (from the credentials file), raise an exception
 
         #TODO: Deal with the case where the file does not exist
@@ -30,7 +43,11 @@ class UserManagement:
             username: the target username
         """
         #TODO: Loop through the loaded accounts and return the one with the right username
-        
+        for user in self.users:
+            if user.username == username:
+                return user
+
+        return None
 
     @staticmethod
     def load(infile: str = 'data/credentials.txt') -> UserManagement:
