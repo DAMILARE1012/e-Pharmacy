@@ -24,6 +24,43 @@ class Menu:
 
     #TODO: Create all the necessary functions/method to create and manage the menu using the
     # available variables and all the attributes of the class
+    def get_main_menu(self):
+        print("*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .]")
+        print("*************************************\n")
+        print("1. Order management")
+        print("2. Get analytics")
+        print("0. Exit application")
+        choice = input("Your choice: ")
+        return choice
+
+    def get_order_menu(self):
+        print("*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .order.]")
+        print("*************************************\n")
+        print("1. Add to cart")
+        print("2. Remove from cart")
+        print("3. Clear cart")
+        print("4. Checkout")
+        print("0. Back")
+        choice = input("Your choice: ")
+        return choice
+
+    def get_analytics_menu(self):
+        print("*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .analytics.]")
+        print("*************************************\n")
+        print("1. Total income from purchases")
+        print("2. Prescription statistics")
+        print("3. Purchases for a user")
+        print("4. Sales by an agent")
+        print("5. Top sales")
+        print("0. Back")
+        choice = input("Your choice: ")
+        return choice
 
     # Make sure to dump the prescriptions, stock, and sale data after every sale.
 

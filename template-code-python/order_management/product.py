@@ -14,7 +14,7 @@ class Product:
     """
     def __init__(
             self, 
-            code: int, 
+            code: str, 
             name: str, 
             brand: str,
             description: str,

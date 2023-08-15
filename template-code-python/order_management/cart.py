@@ -22,9 +22,29 @@ class Cart:
         Returns: None
         """
         #TODO: Make sure the quantity is valid (> 0 and <= to the quantity in the stock)
+        if(quantity <= 0):
+            print("Enter a valid quantity")
+            return None
+        #find the product in stock that matches the code given
+        stockItems = Stock(self.stock)
+        prod = stockItems.getProductByID(productCode)
+        if(prod == None):
+            return None
+        prodQty = int (prod['quantity'])
+        if(quantity > prodQty):
+            print("Sorry, the stock is not sufficient, only "+ str(prod['quantity'])	+" is available" )
+            return None
         #TODO: If the product was already in the cart, increment the quantity
-        
+        if(prod['code'] in self.products):
+            self.products[productCode] += quantity
+            print("Added product to your cart successfully")
+            print(self.products)
         #TODO: After the checks, add the product to the dictionary
+        else:
+            self.products[productCode] = quantity
+            print("Added product to your cart successfully")
+            print(self.products)
+            
 
     def __str__(self) -> str:
         """String representation of the cart
@@ -37,14 +57,22 @@ class Cart:
         """
         Removes a specific product from the cart """
         #TODO: Removes a product from the cart. safely fail if the product code is not found
+        del self.products[code]
+        print("New cart")
+        print(self.products)
+
 
     def clear(self):
         """Clears up the cart.
         """
+        self.products.clear()
+        print("Cart cleared")
+
 
     @property
     def cost(self):
         """Returns the total cost of the cart"""
         #TODO: implement the function
+        
 
     
