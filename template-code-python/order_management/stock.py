@@ -22,7 +22,7 @@ class Stock:
         
         #TODO: Update the quantity
 
-    def getProductByID(self, id: int) -> Product:
+    def getProductByID(self, id: str) -> Product:
         """Gets a product by its ID
 
         Args:
@@ -30,11 +30,25 @@ class Stock:
         
         Returns: the product's object
         """
-        #TODO: Implement te function
-        
+        #TODO: Implement the function
+        count = 0
+        for prod in self.products:
+            if prod['code'] == id:
+                count += 1
+                return prod
+        if count == 0:
+            print(id + " not found")
+
     def dump(self, outfile: str):
         """Saves the stock to a JSON file"""
         #TODO: Implement the function
+        try:
+            with open(outfile, 'w') as f:
+                json.dump(self.products, f)
+        except FileNotFoundError:
+            print("File: " + outfile + " not found")
+        
+
     
     @staticmethod
     def load(infile: str):
@@ -44,6 +58,13 @@ class Stock:
             infile: input file to the function
         """
         #TODO: Implement the function
+        try:
+            with open(infile, 'r') as f:
+                stockData = json.load(f)
+                return stockData
+        except FileNotFoundError:
+            print("File: " + infile + " not found")
+
     
     def __str__(self) -> str:
         """Returns a string representation of the stock
