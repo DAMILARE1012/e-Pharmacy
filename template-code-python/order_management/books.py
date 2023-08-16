@@ -26,6 +26,7 @@ class BookRecords:
         #TODO: In the format below, return a representation of the records
         # |      # | Date                | Customer   | Medication | Quantity | Purchase Price | Prescription |
         # |      1 | 2023-06-03 21:23:25 | doe        | Quinine    |        3 |       1400 RWF | PHA1         |
+
     
     def reportOnPrescriptions(self) -> str:
         """Reports on prescription sales.
@@ -36,9 +37,25 @@ class BookRecords:
         """
         #TODO: From the transactions data, retrieve for each prescription, the actual medications that were processed
         # and aggregate for each, the corresponding total price.
-
+        count = 0
+        prescriptions = []
+        prescriptionsFile = "data/prescriptions.json"
+        books = self.load(prescriptionsFile)
+        
         #TODO: output in the following format, the results: 
         # |    # | Prescription ID | Total Price |
+        txn = {}
+        totalPrice = 0.0
+        for transaction in books.transactions:
+            count += 1
+            txn['#'] = count
+            txn['PrescriptionID'] = transaction['PrescriptionID']
+            for transac in self.transactions:
+                if transac['prescriptionID'] == transaction['PrescriptionID']:
+                    totalPrice += transac['purchase_price']
+            txn['TotalPrice'] = totalPrice
+            prescriptions.append(txn)
+        return prescriptions.__str__()
 
     def purchasesByUser(self, customerID: str):
         """Reports on the sales performed by a customer.
@@ -49,10 +66,15 @@ class BookRecords:
         Returns: A string representation of the corresponding transactions
             
         """
-        #TODO: Query the transactions to the `transactions` list below
-        transactions = None
 
-        return BookRecords(transactions).__str__()
+        #TODO: Query the transactions to the `transactions` list below
+        purchases = []
+        for transaction in self.transactions:
+            if transaction['customerID'] == customerID:
+                purchases.append(transaction)
+        if(len(purchases) == 0):
+            print("The customer "+customerID+" has not made a purchase")
+        return purchases.__str__()
 
     def salesByAgent(self, salesperson: str):
         """Reports on the sales performed by a pharmacist.
@@ -64,10 +86,19 @@ class BookRecords:
             
         """
         #TODO: Query the transactions to the `transactions` list below
-        transactions = None
+        #transactions = None
+        agentTxns = []
+        for transaction in self.transactions:
+            if transaction['salesperson'] == salesperson:
+                agentTxns.append(transaction)
+        if(len(agentTxns) == 0):
+            print("The pharmacist "+salesperson+" has not facilitated any sales")
+        return agentTxns.__str__()
+
 
         # return the string representation
-        return BookRecords(transactions).__str__()
+        return agentTxns
+        #return BookRecords(transactions).__str__()
     
     def topNSales(self, start: datetime = datetime.strptime('1970-01-02', '%Y-%m-%d'), end: datetime = datetime.now(), n = 10) -> str:
         """Return the top n sales ordered by the total price of purchases.
@@ -81,10 +112,12 @@ class BookRecords:
         A string representation of the top n 
         """
         #TODO: Query the top transactions and save them to the variable `transactions` below
-        transactions = None
-
+        
+        #transactions = None
+        rr = start
+        topTxns = []
         # return the string representation of the transactions.
-        return BookRecords(transactions).__str__()
+        #return BookRecords(transactions).__str__()
 
 
     def totalTransactions(self) -> float:
@@ -94,7 +127,7 @@ class BookRecords:
         
         Returns: A floating number representing the total price
         """
-        return sum([transaction.purchase_price for transaction in self.transactions])
+        return sum([transaction['purchase_price'] for transaction in self.transactions])
     
     @classmethod
     def load(cls, infile: str) -> BookRecords:
@@ -106,4 +139,10 @@ class BookRecords:
         """
         #TODO: Implement the function. Make sure to handle the cases where
         # the file does not exist.
-        return NotImplemented
+        try:
+            with open(infile, 'r') as f:
+                records = json.load(f)
+                book_records = BookRecords(records)
+                return book_records
+        except FileNotFoundError:
+            print("File: " + infile + " not found")

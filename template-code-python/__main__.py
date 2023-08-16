@@ -66,10 +66,49 @@ if __name__ == '__main__':
                 print("Invalid entry")
 
         elif(mainMenuChoice == '2'):
+            bookRecs = BookRecords(books.transactions)
             #go to the analytics sub menu
             analyticsMenuChoice = menu.get_analytics_menu()
             if(analyticsMenuChoice == '0'):
                 continue
+            elif(analyticsMenuChoice == '1'):
+                print("The total income from all purchases is: "+str(bookRecs.totalTransactions()))
+
+            elif(analyticsMenuChoice == '2'):
+                menu.get_analytics_prescription_menu()
+                prescReport = bookRecs.reportOnPrescriptions()
+                print(prescReport)
+
+            elif(analyticsMenuChoice == '3'):
+                customerID = input("Enter the cutsomer ID for the user you want to search: ")
+                menu.get_analytics_user_menu()
+                purchasesByUser = bookRecs.purchasesByUser(customerID)
+                if(len(purchasesByUser)>2):
+                    print(purchasesByUser)
+
+            elif(analyticsMenuChoice == '4'):
+                agentID = input("Enter the agent ID for the sales agent you want to search: ")
+                menu.get_analytics_agent_menu()
+                salesByAgent = bookRecs.salesByAgent(agentID)
+                if(len(salesByAgent)>2):
+                    print(salesByAgent)
+
+            elif(analyticsMenuChoice == '5'):
+                userN = -1
+                startTime = input("Enter the start date from which you want to search for. Default=1970-01-02: ")
+                endTime = input("Enter the end date till which you want to search for. Default=now: ")
+                userN = input("Enter the number of items you want to search for. Default=10: ")
+                menu.get_analytics_sales_menu()
+                #if no arguments are entered
+                if(len(startTime) == 0 and len(startTime) == 0 and userN == -1):
+                    bookRecs.topNSales()
+                #if 
+                elif(len(startTime) == 0 and len(startTime) == 0):
+                    bookRecs.topNSales(n = userN)
+
+
+            else:
+                print("Invalid entry")
 
         elif(mainMenuChoice == '0'):
             #Exit the app

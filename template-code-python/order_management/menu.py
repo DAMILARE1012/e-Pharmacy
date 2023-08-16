@@ -25,7 +25,7 @@ class Menu:
     #TODO: Create all the necessary functions/method to create and manage the menu using the
     # available variables and all the attributes of the class
     def get_main_menu(self):
-        print("*************************************")
+        print("\n*************************************")
         print("Order management and analytics menu")
         print("[loc: .]")
         print("*************************************\n")
@@ -61,7 +61,34 @@ class Menu:
         print("0. Back")
         choice = input("Your choice: ")
         return choice
+    #2ND ORDER MENUS
+    def get_analytics_sales_menu(self):
+        print("\n*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .analytics.sales]")
+        print("*************************************\n")
+        print("Output: ")
 
+    def get_analytics_agent_menu(self):
+        print("\n*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .analytics.agent]")
+        print("*************************************\n")
+        print("Output: ")
+    
+    def get_analytics_prescription_menu(self):
+        print("\n*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .analytics.prescription]")
+        print("*************************************\n")
+        print("Output: ")
+
+    def get_analytics_user_menu(self):
+        print("\n*************************************")
+        print("Order management and analytics menu")
+        print("[loc: .analytics.user]")
+        print("*************************************\n")
+        print("Output: ")
     # Make sure to dump the prescriptions, stock, and sale data after every sale.
 
     # Your menu should have two main options with suboptions. Such as
