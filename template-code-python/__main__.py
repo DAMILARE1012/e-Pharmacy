@@ -59,7 +59,9 @@ if __name__ == '__main__':
             elif(orderMenuChoice == '3'):
                 cart.clear()
             elif(orderMenuChoice == '4'):
-                wrap.checkout(cart,)
+                prescriptions = Stock.load(prescription_file)
+                for prescription in prescriptions:
+                    wrap.checkout(cart,prescription['CustomerID'],prescription)
             else:
                 print("Invalid entry")
 
